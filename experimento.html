@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Olá, mundo!</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script> <!-- Deve ser o React (biblioteca). Interessante acessar o código direto. ChatGPT: É o React empacotado (já compilado e pronto pra usar). Não é o código-fonte original que os devs do React escrevem.| Eu: É o build, não o fonte. -->
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script> <!-- Esse seria o React DOM. É a ponte entre React e o DOM do navegador (segundo o ChatGPT). --->
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> <!-- Parece ser o babel minificado.-->
+  </head>
+  <body>
+    <div id="root"></div>
+    <p>Misturando HTML com o React nesta linha, conforme informado que é possível.</p>
+
+    <h1> Olha outro HTML aqui, gente! </h1>
+    <footer id="pezinho-teste"></footer>
+    <script type="text/babel">
+    
+      function MyApp() {
+        return <h1>Olá, mundo!</h1>;
+      }
+
+      const container = document.getElementById('root'); // Escolhendo o container sobre o qual o React irá renderizar
+      const root = ReactDOM.createRoot(container); // Determinando o root, basicamente passando o container como argumento para criar o root. 
+      root.render(<MyApp />); // No root selecionado, renderizar o container argumentado.
+      // Por isso que vira um SPA, porque tudo fica renderizado dentro de uma única página, geralmente dentro do container App.
+
+
+
+      // Bricando com React
+
+      function Teste() {
+        return (<>
+            <h2> Deixa eu tester o React aqui</h2>
+            <h1 style={{color:"red"}}> &#x1F3B6; Tá dominado, tá tudo dominado! &#x1F3B6;</h1>
+            <p style={{fontSize: 12 }}> Brincadeira. Ainda não tá dominado. Porque a sintaxe do 'style' tive que ver na IA, já que em JSX é diferente. Isso (e muitas outras coisas) ainda preciso aprender/masterizar.</p>
+            </>);
+      }
+
+
+      const container2 = document.getElementById('pezinho-teste'); 
+      const root2 = ReactDOM.createRoot(container2); 
+      root2.render(<Teste />); 
+
+
+
+    </script>
+    <!--
+      Note: this page is a great way to try React but it's not suitable for production.
+      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+
+      Read this page for starting a new React project with JSX:
+      https://react.dev/learn/start-a-new-react-project
+
+      Read this page for adding React with JSX to an existing project:
+      https://react.dev/learn/add-react-to-an-existing-project
+    -->
+  </body>
+</html>
+<!--
+      // NOTA: Segundo o ChatGPT: o createRoot habilita o modo concorrente do React.
+
+      /*
+      ChatGPT me "corrigindo":
+      
+        Só um detalhe conceitual:
+
+            não é só por renderizar em um container que vira SPA
+            é mais pelo fato de o React gerenciar navegação/estado sem recarregar a página.
+            Mas, de novo: pra quem está aprendendo, está certíssimo.
+      
+      */
+
+-->
