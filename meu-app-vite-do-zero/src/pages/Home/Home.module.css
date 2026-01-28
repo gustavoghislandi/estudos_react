@@ -1,0 +1,14 @@
+.container {
+  padding: 20px;
+  background-color: #f3f3f3;
+  border-radius: 8px;
+}
+
+.title {
+  color: #63a577;
+}
+
+.item {
+  margin: 6px 0;
+  color: #63a577;
+}
