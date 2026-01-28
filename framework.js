@@ -128,9 +128,7 @@
 
 //--------------------------
 
-// (remover estes trechos abaixo depois)
-// Próximos pontos de estudo para entender mais profundamente os temas do 'deep dive':
+// Começar um React do zero é semelhante a construir o seu próprio framework 'ad hoc'.
 
-// https://react.dev/blog/2020/12/21/data-fetching-with-react-server-components
+// Escolha não usar um framework se estiver ciente dos problemas de performance que podem ocorrer se sua aplicação ganhar usuários, estando confortável para lidar com esses problemas ou sabendo que nunca precisará dessas funcionalidades que os frameworks oferecem.
 
-// https://react.dev/reference/rsc/server-components
