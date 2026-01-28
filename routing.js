@@ -1,5 +1,7 @@
 // Roteamento (Routing)
 
+// Roteamento determina qual conteúdo ou páginas exibir quando um usuário visita uma URL específica. 
+
 // Sem usar um framework, ou uma lib de roteamento, o rotamento pode ser feito com 'useState'.
 // Porém, ele não cria as paths, as páginas são acessadas sempre no mesmo link,
 // então você não pode compartilhar ou salvar links diretos para páginas específicas.
