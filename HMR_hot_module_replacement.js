@@ -1,0 +1,1 @@
+// HMR (Hot Module Replacement) é uma técnica que atualiza partes do código em tempo real, sem recarregar a página inteira, mantendo o estado da aplicação durante o desenvolvimento.
