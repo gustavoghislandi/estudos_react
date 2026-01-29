@@ -207,9 +207,94 @@
 
 Bibliotecas de busca de dados especializadas fazem o trabalho pesado de buscar e cachear os dados para você, permitindo que você se concentre em quais dados sua aplicação precisa e como exibi-los. Essas bibliotecas são tipicamente usadas diretamente nos seus componentes, mas também podem ser integradas em loaders de roteamento para pré-busca mais rápida e melhor performance, e também na renderização do servidor. */
 
-// Note that fetching data directly in components can lead to slower loading times due to network request waterfalls,
-// so we recommend prefetching data in 'router loaders' or on the server as much as possible!
-// This allows a page’s data to be fetched all at once as the page is being displayed.
+/* Note that fetching data directly in components can lead to slower loading times due to network request waterfalls,
+so we recommend prefetching data in 'router loaders' or on the server as much as possible!
+This allows a page’s data to be fetched all at once as the page is being displayed.*/
+
+/*
+Se você está buscando dados da maioria dos backends ou APIs estilo REST, sugerimos usar:
+
+    React Query
+    SWR
+    RTK Query
+
+Se você está buscando dados de uma API GraphQL, sugerimos usar:
+
+    Apollo
+    Relay
+ */
+
 
 // - Divisão de Código - (Code Splitting)
+
+// Divisão de código é o processo de quebrar sua aplicação em bundles menores que podem ser carregados sob demanda.
+
+// O tamanho do código de uma aplicação aumenta com cada nova funcionalidade e dependência adicional. 
+// As aplicações podem se tornar lentas para carregar porque todo o código para a aplicação inteira precisa ser enviado antes que possa ser usado.
+
+// Cache,
+// redução de funcionalidades/dependências,
+// e mover algum código para executar no servidor
+// podem ajudar a mitigar o carregamento lento,
+// mas são soluções incompletas que podem sacrificar funcionalidade se usadas em excesso.
+
+//--- ChatGPT sobre por que são soluções incompletas:
+
+// São incompletas porque não atacam a causa principal do problema, só aliviam parte dos sintomas:
+
+    // Cache
+
+        // Ajuda depois do primeiro acesso. No primeiro carregamento, o usuário ainda precisa baixar tudo.
+
+    // Reduzir funcionalidades/dependências
+
+        // Melhora o tamanho, mas sacrifica recursos do produto. Não escala bem conforme a app cresce.
+
+    // Mover código para o servidor
+
+        // Diminui o bundle, mas aumenta dependência de rede/latência e não elimina a necessidade de carregar código no cliente.
+
+    // Já a divisão de código (code splitting) resolve a raiz:
+
+        // 👉 o usuário só baixa o código que precisa, quando precisa, evitando enviar a aplicação inteira de uma vez.
+
+
+//--- fim do ChatGPT sobre por que são soluções incompletas.
+
+// Dividir código por rota, quando integrado com bundling e busca de dados, pode reduzir o tempo de carregamento inicial da sua aplicação e o tempo que leva para o maior conteúdo visível da aplicação renderizar (Largest Contentful Paint).
+
+// Similarly, if you rely on the apps using your framework to split the code, you might encounter situations where loading becomes slower than if no code splitting were happening at all. For example, lazily loading a chart delays sending the code needed to render the chart, splitting the chart code from the rest of the app. Parcel supports code splitting with React.lazy. However, if the chart loads its data after it has been initially rendered you are now waiting twice. This is a waterfall: rather than fetching the data for the chart and sending the code to render it simultaneously, you must wait for each step to complete one after the other. [Mais sobre isso em code_splitting.js, linha 105 em diante]
+
+/*
+Para instruções de divisão de código, veja a documentação da sua ferramenta de build:
+
+    Otimizações de build do Vite
+    Divisão de código do Parcel
+    Divisão de código do Rsbuild
+
+        Links em https://react.dev/learn/build-a-react-app-from-scratch
+
+ */
+
 // - Melhorando a Performance da Aplicação -
+
+/*
+Como a ferramenta de build que você seleciona só suporta aplicações de página única (SPAs), você precisará implementar outros padrões de renderização como renderização do lado do servidor (SSR), geração de site estático (SSG), e/ou React Server Components (RSC). Mesmo se você não precisar dessas funcionalidades no início, no futuro pode haver algumas rotas que se beneficiariam de SSR, SSG ou RSC.
+
+    Aplicações de página única (SPA) carregam uma única página HTML e atualizam dinamicamente a página conforme o usuário interage com a aplicação. SPAs são mais fáceis de começar, mas podem ter tempos de carregamento inicial mais lentos. SPAs são a arquitetura padrão para a maioria das ferramentas de build.
+
+    Renderização do lado do servidor com streaming (SSR) renderiza uma página no servidor e envia a página totalmente renderizada para o cliente. SSR pode melhorar a performance, mas pode ser mais complexo de configurar e manter do que uma aplicação de página única. Com a adição de streaming, SSR pode ser muito complexo de configurar e manter. Veja o guia SSR do Vite. [https://vite.dev/guide/ssr]
+
+    Geração de site estático (SSG) gera arquivos HTML estáticos para sua aplicação no momento do build. SSG pode melhorar a performance, mas pode ser mais complexo de configurar e manter do que renderização do lado do servidor. Veja o guia SSG do Vite. [https://vite.dev/guide/ssr.html#pre-rendering-ssg]
+
+    React Server Components (RSC) permite misturar componentes de build-time, apenas do servidor, e interativos em uma única árvore React. RSC pode melhorar a performance, mas atualmente requer expertise profunda para configurar e manter. Veja os exemplos RSC do Parcel. [https://github.com/parcel-bundler/rsc-examples]
+
+Suas estratégias de renderização precisam se integrar com seu roteador para que aplicações construídas com seu framework possam escolher a estratégia de renderização no nível de rota. Isso permitirá diferentes estratégias de renderização sem ter que reescrever toda a sua aplicação. Por exemplo, a página de destino da sua aplicação pode se beneficiar de ser gerada estaticamente (SSG), enquanto uma página com um feed de conteúdo pode ter melhor performance com renderização do lado do servidor.
+
+Usar a estratégia de renderização certa para as rotas certas pode diminuir o tempo que leva para o primeiro byte de conteúdo ser carregado (Time to First Byte), o primeiro pedaço de conteúdo renderizar (First Contentful Paint), e o maior conteúdo visível da aplicação renderizar (Largest Contentful Paint).
+E mais…
+
+Estes são apenas alguns exemplos das funcionalidades que uma nova aplicação precisará considerar ao construir do zero. Muitas limitações que você encontrará podem ser difíceis de resolver, já que cada problema está interconectado com os outros e pode requerer expertise profunda em áreas problemáticas com as quais você pode não estar familiarizado.
+
+Se você não quer resolver esses problemas por conta própria, pode começar com um framework que fornece essas funcionalidades prontas para uso.
+*/

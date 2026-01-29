@@ -101,3 +101,38 @@ const router3 = createBrowserRouter([
     // Outros chunks (lazy-loaded) só são baixados quando necessários, mas o inicial sempre carrega junto com a página.
 
 // Então, em termos de Webpack ou React Router, todo código JavaScript é organizado em chunks — só que alguns são carregados imediatamente (initial) e outros sob demanda (lazy).
+
+//--------------------------------------------------
+
+// Um ponto sutil sobre code splitting, especialmente quando usado de forma “preguiçosa” (lazy loading) em frameworks como React. 
+
+// Vou explicar passo a passo:
+
+// 1️⃣ O que acontece com code splitting
+
+    // Quando você faz algo assim:
+
+        const Chart = React.lazy(() => import('./Chart'));
+
+        // Você quebra o bundle: o código do Chart não é enviado junto com o resto da app, só será baixado quando o componente realmente for usado.
+
+        // Isso economiza download inicial, mas cria um efeito de espera extra.
+
+// 2️⃣ O problema do “waterfall”
+
+    // Imagine o fluxo de um gráfico que precisa de dados do servidor:
+
+        // A app carrega e renderiza a página principal.
+        // O usuário abre a seção do gráfico.
+        // React vê que o Chart é lazy, então primeiro baixa o código do Chart.
+        // Depois de baixar o código, ele busca os dados do gráfico.
+        // Só então consegue renderizar o gráfico.
+
+    // Ou seja, você espera duas coisas em sequência: primeiro o código, depois os dados. 
+    // Isso cria uma latência acumulada (waterfall), e em alguns casos pode ser mais lento que simplesmente ter o Chart no bundle inicial, que já poderia começar a buscar dados imediatamente.
+
+// 3️⃣ Conclusão
+
+    // Code splitting é ótimo para reduzir o tamanho inicial do bundle, mas pode atrasar certas funcionalidades, especialmente componentes que dependem de dados externos.
+
+    // É uma trade-off: você ganha rapidez no carregamento inicial, mas pode introduzir atrasos no uso de algumas partes da app.
