@@ -31,5 +31,23 @@ ReactDOM.createRoot(container).render(<App />); // React 18+
 
 // Ou mais legível no React 18+:
 
-const root = ReactDOM.createRoot(container);
+const root2 = ReactDOM.createRoot(container); // Não sei usa mais ReactDOM, porque já pega do react-dom/client (veja abaixo)
 root.render(<App />);
+
+
+// Agora (React 18)
+
+// O React separou melhor as responsabilidades.
+// A função createRoot não fica mais em react-dom, e sim em react-dom/client:
+
+    import { createRoot } from "react-dom/client";
+
+    const root = createRoot(document.getElementById("root"));
+    root.render(
+        <StrictMode>
+            <App />
+        </StrictMode>
+    );
+
+// Por isso o tutorial não usa ReactDOM diretamente — ele importa só o que precisa.
+
