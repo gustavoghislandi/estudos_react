@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-function Square({value, onSquareClick}){
+function Square({ value, onSquareClick }) {
 
-  return <button 
-  className="square"
-  onClick={onSquareClick}
+  return <button
+    className="square"
+    onClick={onSquareClick}
   >
     {value}
-    </button>
+  </button>
 }
 
 function calculateWinner(squares) {
@@ -30,7 +30,7 @@ function calculateWinner(squares) {
   return null;
 }
 
-export function Board({ xIsNext, squares, onPlay}) {
+export function Board({ xIsNext, squares, onPlay }) {
   // const [xIsNext, setXIsNext] = useState(true);
   // const [squares, setSquares] = useState(Array(9).fill(null)); // Array(9).fill(null) creates an array with nine elements and sets each of them to null.
   const winner = calculateWinner(squares);
@@ -38,13 +38,13 @@ export function Board({ xIsNext, squares, onPlay}) {
   if (winner) {
     status = "Winner: " + winner;
   } else {
-    status = "Next player: " + (xIsNext ? "X": "O");
+    status = "Next player: " + (xIsNext ? "X" : "O");
   }
 
   function handleClick(i) {
     // Se squares[i] for 'truthy', só retorna. Ou calcula vencedor.
-    if (squares[i] || calculateWinner(squares)){
-      return; 
+    if (squares[i] || calculateWinner(squares)) {
+      return;
     }
     const nextSquares = squares.slice(); //  slice sem argumentos cria uma cópia (uma "fatia inteira")
     if (xIsNext) {
@@ -75,52 +75,62 @@ export function Board({ xIsNext, squares, onPlay}) {
   </>;
 }
 
-export default function Game(){
+export default function Game() {
   // const [xIsNext, setXIsNext] = useState(true); // Transferida para baixo.
-  
+
   const [history, setHistory] = useState([Array(9).fill(null)]); // Perceba como [Array(9).fill(null)] é um array com um único item, o qual é em si um array de 9 nulls.
   const [currentMove, setCurrentMove] = useState(0);
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
 
-  const moves = history.map((squares,move) =>{
+  const moves = history.map((squares, move) => {
     let description;
+    if (move === currentMove) {
+      if (move === 0){
+        return <li>You are at the game start</li>
+      } else
+      return <li>You are at move #{move}</li>
+    } else {
     if (move > 0) {
       description = 'Go to move #' + move;
     } else {
       description = 'Go to game start';
     }
+    }
     return (
-      <li key={move}> 
-        <button onClick={() => jumpTo(move)}>{description}</button>
-      </li>
+    <li key={move}>
+      <button onClick={() => jumpTo(move)}>{description}</button>
+    </li>
     );
-  });
+});
 
 
-  function handlePlay(nextSquares){
-    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
-    setHistory(nextHistory);
-    setCurrentMove(nextHistory.length - 1);
-    // setXIsNext(!xIsNext);
-  }
+function handlePlay(nextSquares) {
+  const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+  setHistory(nextHistory);
+  setCurrentMove(nextHistory.length - 1);
+  // setXIsNext(!xIsNext);
+}
 
-  function jumpTo(nextMove) {
-    setCurrentMove(nextMove);
-    // setXIsNext(nextMove % 2 === 0);
-  }
+function jumpTo(nextMove) {
+  setCurrentMove(nextMove);
+  // setXIsNext(nextMove % 2 === 0);
+}
 
-  return (
-    <div className="game">
-      <div className="game-board">
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
-      </div>
-      <div className="game-info">
-        <ol>{moves}</ol>
-      </div>
+return (
+  <div className="game">
+    <div className="game-board">
+      <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
     </div>
-  )
+    <div className="game-info">
+      <ol>
+        {moves}
+      </ol>
+      
+    </div>
+  </div>
+)
 }
 
 
