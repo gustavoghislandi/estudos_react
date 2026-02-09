@@ -55,8 +55,28 @@ export function Board({ xIsNext, squares, onPlay }) {
     onPlay(nextSquares)
   }
 
+const board = [...Array(3)].map((_, row) => ( //  _ underscore é convenção de nome de parâmetro não usado.
+  <div className="board-row">
+    {[...Array(3)].map((square, col) => { // Spread é necessário para o array ter índices. Array(3) não funcionaria. Poderia ser Array(3).fill(null) ou [0, 1, 2].
+      const index = row * 3 + col; // 0 * 3 + 0; 0 * 3 + 1; 0 * 3 + 2; 1 * 3 + 0;...
+      return (
+        <Square
+          key={index}
+          value={squares[index]}
+          onSquareClick={() => handleClick(index)}
+        />
+      );
+    })}
+  </div>
+));
+
+  // Primeira tentativa (eu já sabia que iria sair em uma única dimensão):
+  // const arrayBoard = squares.map((square,index) => {
+  //   return <Square value={squares[index]} onSquareClick={() => handleClick(index)} /> // Depois a IA me mostrou o óbvio value={square}
+  // })
+
   return <>
-    <div className="status">{status}</div>
+    {/* <div className="status">{status}</div>
     <div className="board-row">
       <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
       <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
@@ -72,6 +92,9 @@ export function Board({ xIsNext, squares, onPlay }) {
       <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
       <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
     </div>
+    <p>Novo Board</p> */}
+    {/* {arrayBoard} */}
+    {board}
   </>;
 }
 
