@@ -71,6 +71,7 @@ export function Board({ xIsNext, squares, onPlay }) {
   ));
 
   return <>
+    <div style={{margin:10}}>{status}</div>
     {board}
   </>;
 }
