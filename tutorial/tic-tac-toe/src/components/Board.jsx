@@ -6,7 +6,11 @@ export default function Board({ xIsNext, squares, onPlay }) {
   const winner = calculateWinner(squares);
   let status;
   if (winner) {
+    if (winner[1] === "draw"){
+      status = "It's a draw"
+    } else {
     status = "Winner: " + winner[0];
+    }
   } else {
     status = "Next player: " + (xIsNext ? "X" : "O");
   }
@@ -43,6 +47,10 @@ export default function Board({ xIsNext, squares, onPlay }) {
         return [squares[a],[a,b,c]];
       }
     }
+    if (!squares.includes(null)){
+      return [null, "draw"]
+    }
+
     return null;
   }
 
