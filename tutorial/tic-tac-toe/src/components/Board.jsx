@@ -6,7 +6,7 @@ export default function Board({ xIsNext, squares, onPlay }) {
   const winner = calculateWinner(squares);
   let status;
   if (winner) {
-    (winner[1] === "draw") ? status = "It's a draw" : status = "Winner: " + winner[0];
+    (winner[1] === "draw") ? status = `It's a ${winner[1]}` : status = `Winner: ${winner[0]}`;
     }
   else {
     status = "Next player: " + (xIsNext ? "X" : "O");
