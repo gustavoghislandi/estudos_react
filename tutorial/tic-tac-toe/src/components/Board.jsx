@@ -6,7 +6,7 @@ export default function Board({ xIsNext, squares, onPlay }) {
   const winner = calculateWinner(squares);
   let status;
   if (winner) {
-    status = "Winner: " + winner;
+    status = "Winner: " + winner[0];
   } else {
     status = "Next player: " + (xIsNext ? "X" : "O");
   }
@@ -40,7 +40,7 @@ export default function Board({ xIsNext, squares, onPlay }) {
       const [a, b, c] = lines[i];
       if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
 
-        return squares[a];
+        return [squares[a],[a,b,c]];
       }
     }
     return null;
@@ -50,6 +50,20 @@ export default function Board({ xIsNext, squares, onPlay }) {
     <div className="board-row">
       {[...Array(3)].map((square, col) => { // Spread é necessário para o array ter índices. Array(3) não funcionaria. Poderia ser Array(3).fill(null) ou [0, 1, 2].
         const index = row * 3 + col; // 0 * 3 + 0; 0 * 3 + 1; 0 * 3 + 2; 1 * 3 + 0;...
+
+        if (winner){
+          if (index === winner[1][0] || index === winner[1][1] || index === winner[1][2])
+
+          return (
+          <Square
+            key={`square-${index}`}
+            value={squares[index]}
+            onSquareClick={() => handleClick(index)}
+            styles={{backgroundColor: "yellow"}}
+          />
+        );
+        }
+
         return (
           <Square
             key={index}
