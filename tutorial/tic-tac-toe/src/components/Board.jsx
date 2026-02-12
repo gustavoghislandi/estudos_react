@@ -1,6 +1,7 @@
+import { useEffect } from "react";
 import Square from "./Square";
 
-export default function Board({ xIsNext, squares, onPlay }) {
+export default function Board({ xIsNext, squares, onPlay, setRowCol }) {
   // const [xIsNext, setXIsNext] = useState(true);
   // const [squares, setSquares] = useState(Array(9).fill(null)); // Array(9).fill(null) creates an array with nine elements and sets each of them to null.
   const winner = calculateWinner(squares);
@@ -12,7 +13,7 @@ export default function Board({ xIsNext, squares, onPlay }) {
     status = "Next player: " + (xIsNext ? "X" : "O");
   }
 
-  function handleClick(i) {
+  function handleClick(i, row, col) {
     // Se squares[i] for 'truthy', só retorna. Ou calcula vencedor.
     if (squares[i] || calculateWinner(squares)) {
       return;
@@ -24,6 +25,12 @@ export default function Board({ xIsNext, squares, onPlay }) {
       nextSquares[i] = 'O';
     }
     onPlay(nextSquares)
+
+    setRowCol(prev => {
+      const rc = [...prev]
+      rc[i] = [row + 1, col +1]
+      return rc
+    })
   }
 
   function calculateWinner(squares) {
@@ -51,6 +58,18 @@ export default function Board({ xIsNext, squares, onPlay }) {
     return null;
   }
 
+  useEffect(() => {
+    const positions = [];
+
+    [...Array(3)].forEach((_, row) => {
+      [...Array(3)].forEach((_, col) => {
+        positions.push([row + 1, col + 1]);
+      });
+    });
+
+    setRowCol(positions);
+  }, []);
+
   const board = [...Array(3)].map((_, row) => ( //  _ underscore é convenção de nome de parâmetro não usado.
     <div className="board-row">
       {[...Array(3)].map((square, col) => { // Spread é necessário para o array ter índices. Array(3) não funcionaria. Poderia ser Array(3).fill(null) ou [0, 1, 2].
@@ -63,7 +82,7 @@ export default function Board({ xIsNext, squares, onPlay }) {
           <Square
             key={`square-${index}`}
             value={squares[index]}
-            onSquareClick={() => handleClick(index)}
+            onSquareClick={() => handleClick(index, row, col)}
             styles={{backgroundColor: "yellow"}}
           />
         );
@@ -73,7 +92,7 @@ export default function Board({ xIsNext, squares, onPlay }) {
           <Square
             key={index}
             value={squares[index]}
-            onSquareClick={() => handleClick(index)}
+            onSquareClick={() => handleClick(index, row, col)}
           />
         );
       })}
