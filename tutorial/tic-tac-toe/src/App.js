@@ -38,9 +38,9 @@ export default function Game() {
         return <li>You are at move #{realMove} | row: {rowCol[squareIndex][0]}, col: {rowCol[squareIndex][1]}</li>
     } else {
       if (realMove > 0) {
-        console.log(`row: ${rowCol[realMove-1][0]}`)
-        console.log(`col: ${rowCol[realMove-1][1]}`)
-        description = `Go to move # ${realMove} | row: ${rowCol[realMove-1][0]}, col: ${rowCol[realMove-1][1]}`;
+        console.log(`row: ${rowCol[squareIndex][0]}`)
+        console.log(`col: ${rowCol[squareIndex][1]}`)
+        description = `Go to move # ${realMove} | row: ${rowCol[squareIndex][0]}, col: ${rowCol[squareIndex][1]}`;
       } else {
         description = 'Go to game start';
       }
