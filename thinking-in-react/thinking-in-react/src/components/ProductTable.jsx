@@ -27,6 +27,7 @@ export default function ProductTable({ products }) {
         <tr>
           <th>Name</th>
           <th>Price</th>
+          <th>Other</th>
         </tr>
       </thead>
       <tbody>{rows}</tbody>
