@@ -58,3 +58,17 @@
     //     A lista filtrada de produtos não é state porque pode ser computada pegando a lista original de produtos e filtrando-a de acordo com o texto de busca e o valor da checkbox.
 
 // Isso significa que apenas o texto de busca e o valor da checkbox são state!
+
+// Step 4: Identify where your state should live 
+
+    // Seus states devem ficar no componente pai que seja comum a todos os que usem esse componente.
+
+    // Se o ProductTable não tivesse acesso ao state, ele não conseguiria filtrar os produtos dinamicamente quando o usuário mudasse o texto ou a checkbox. Então a aplicação não funcionaria como esperado.
+
+// Step 5: Add inverse data flow 
+
+    // Aqui o exemplo ficou rodando, então vou deixar um lembrete:
+
+        // forEach: quando você quer executar algo para cada item, sem criar novo array.
+
+        // map: quando você quer criar um novo array transformando os itens.
