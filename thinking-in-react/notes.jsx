@@ -24,3 +24,37 @@
     // This is called 'one-way data flow' because the data flows down from the top-level component to the ones at the bottom of the tree.
 
         // Ou seja, o componente mais alto será quem receberá os dados que virão da API como prop repassando-o aos demais, de cima para baixo.
+
+// Step 3: Find the minimal but complete representation of UI state 
+
+// To make the UI interactive, you need to let users change your underlying data model. You will use state for this.
+
+// Think of state as the minimal set of changing data that your app needs to remember. 
+// The most important principle for structuring state is to keep it DRY (Don’t Repeat Yourself).
+// Descubra a representação absolutamente mínima do state que sua aplicação precisa e compute todo o resto sob demanda. 
+
+    // Por exemplo, se você está construindo uma lista de compras, você pode armazenar os itens como um array no state. Se você também quer exibir o número de itens na lista, não armazene o número de itens como outro valor de state—em vez disso, leia o comprimento do seu array.
+
+// Agora pense em todas as partes de dados nesta aplicação de exemplo:
+
+//     A lista original de produtos
+//     O texto de busca que o usuário digitou
+//     O valor da checkbox
+//     A lista filtrada de produtos
+
+// Quais desses são state? Identifique os que não são:
+
+    //     Permanece inalterado ao longo do tempo? Se sim, não é state.
+    //     É passado de um pai via props? Se sim, não é state.
+    //     Você pode computá-lo baseado no state ou props existentes em seu componente? Se sim, definitivamente não é state!
+
+    // O que sobra provavelmente é state.
+
+// Vamos passá-los um por um novamente:
+
+    //     A lista original de produtos é passada como props, então não é state.
+    //     O texto de busca parece ser state já que muda ao longo do tempo e não pode ser computado a partir de nada.
+    //     O valor da checkbox parece ser state já que muda ao longo do tempo e não pode ser computado a partir de nada.
+    //     A lista filtrada de produtos não é state porque pode ser computada pegando a lista original de produtos e filtrando-a de acordo com o texto de busca e o valor da checkbox.
+
+// Isso significa que apenas o texto de busca e o valor da checkbox são state!
