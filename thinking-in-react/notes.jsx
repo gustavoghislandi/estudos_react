@@ -66,3 +66,9 @@
     // Se o ProductTable não tivesse acesso ao state, ele não conseguiria filtrar os produtos dinamicamente quando o usuário mudasse o texto ou a checkbox. Então a aplicação não funcionaria como esperado.
 
 // Step 5: Add inverse data flow 
+
+    // Aqui o exemplo ficou rodando, então vou deixar um lembrete:
+
+        // forEach: quando você quer executar algo para cada item, sem criar novo array.
+
+        // map: quando você quer criar um novo array transformando os itens.
