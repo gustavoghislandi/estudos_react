@@ -1,3 +1,7 @@
+// Mutação em React é quando uma função pega uma variável fora do escopo dela e muda ela. Isso torna a função impura.
+
+//---------------------
+
 // Keeping Components Pure
 
 // Some JavaScript functions are pure. Pure functions only perform a calculation and nothing more. By strictly only writing your components as pure functions, you can avoid an entire class of baffling bugs and unpredictable behavior as your codebase grows. To get these benefits, though, there are a few rules you must follow.
@@ -92,3 +96,30 @@
 // Notice how the original example displayed “Guest #2”, “Guest #4”, and “Guest #6” instead of “Guest #1”, “Guest #2”, and “Guest #3”. The original function was impure, so calling it twice broke it. But the fixed pure version works even if the function is called twice every time. Pure functions only calculate, so calling them twice won’t change anything—just like calling double(2) twice doesn’t change what’s returned, and solving y = 2x twice doesn’t change what y is. Same inputs, same outputs. Always.
 
 // Strict Mode has no effect in production, so it won’t slow down the app for your users. To opt into Strict Mode, you can wrap your root component into <React.StrictMode>. Some frameworks do this by default.
+
+// Local mutation: Your component’s little secret 
+
+// No exemplo acima, o problema era que o componente alterou uma variável pré-existente durante a renderização. Isso é frequentemente chamado de “mutação” para soar um pouco mais assustador. Funções puras não mutam variáveis fora do escopo da função ou objetos que foram criados antes da chamada—isso as torna impuras!
+
+// Ou seja, "mutação" em React é quando uma função pega uma variável fora do escopo dela e muda ela. Isso torna a função impura.
+
+// No entanto, é perfeitamente normal alterar variáveis e objetos que você acabou de criar durante a renderização. Neste exemplo, você cria um array [], o atribui a uma variável cups, e então faz push de uma dúzia de xícaras nele:
+
+    function Cup({ guest }) {
+        return <h2>Xícara de chá para convidado #{guest}</h2>;
+    }
+
+    export default function TeaGathering() {
+        const cups = [];
+        for (let i = 1; i <= 12; i++) {
+            cups.push(<Cup key={i} guest={i} />);
+        }
+        return cups;
+    }
+
+
+// Se a variável cups ou o array [] fossem criados fora da função TeaGathering, isso seria um grande problema! Você estaria alterando um objeto pré-existente empurrando itens para esse array.
+
+// No entanto, está tudo bem porque você os criou durante a mesma renderização, dentro de TeaGathering. Nenhum código fora de TeaGathering jamais saberá que isso aconteceu. Isso é chamado de “mutação local”—é como o pequeno segredo do seu componente.
+
+// Ou seja, se for "mutação local"("local mutation"), não tem problema.
