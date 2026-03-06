@@ -137,3 +137,37 @@
 // Side effects geralmente pertencem a event handlers
 // Event handlers são funções em que você performa uma ação (exemplo, clicar em um botão).
 // Apesar de event handlers serem definidos dentro do componente, eles não rodam durante a renderização. Então eles não precisam ser puros.
+
+// Why does React care about purity?
+
+    // Writing pure functions takes some habit and discipline. But it also unlocks marvelous opportunities:
+
+    // Your components could run in a different environment—for example, on the server! Since they return the same result for the same inputs, one component can serve many user requests.
+
+        // A lógica fica dentro do backend e só envia a parte do return. Com isso, se acessa BD e outros dados rapidamente e depois envia o componente montado.
+
+            // Não só HTML, mas quase isso.
+
+                // Depende do tipo de componente:
+
+                // Server Component
+
+                    // O servidor executa tudo.
+                    // O cliente recebe HTML + um payload pequeno do React para montar a árvore.
+                    // Quase nenhum JavaScript é enviado.
+
+                // Client Component ("use client")
+
+                    // O navegador recebe HTML + JavaScript do componente.
+                    // O React precisa rodar no cliente para hidratar e permitir interação.
+
+                // Por isso fica mais leve:
+
+                    // Menos JavaScript no navegador
+                    // Menos código para baixar
+                    // Renderização inicial mais rápida
+
+    // You can improve performance by skipping rendering components whose inputs have not changed. This is safe because pure functions always return the same results, so they are safe to cache.
+    // If some data changes in the middle of rendering a deep component tree, React can restart rendering without wasting time to finish the outdated render. Purity makes it safe to stop calculating at any time.
+
+    // Every new React feature we’re building takes advantage of purity. From data fetching to animations to performance, keeping components pure unlocks the power of the React paradigm.
