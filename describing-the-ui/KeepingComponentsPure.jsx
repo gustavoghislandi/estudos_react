@@ -123,3 +123,17 @@
 // No entanto, está tudo bem porque você os criou durante a mesma renderização, dentro de TeaGathering. Nenhum código fora de TeaGathering jamais saberá que isso aconteceu. Isso é chamado de “mutação local”—é como o pequeno segredo do seu componente.
 
 // Ou seja, se for "mutação local"("local mutation"), não tem problema.
+
+// Where you can cause side effects 
+
+// While functional programming relies heavily on purity, at some point, somewhere, something has to change. That’s kind of the point of programming! These changes—updating the screen, starting an animation, changing the data—are called side effects. They’re things that happen “on the side”, not during rendering.
+
+// In React, side effects usually belong inside event handlers. Event handlers are functions that React runs when you perform some action—for example, when you click a button. Even though event handlers are defined inside your component, they don’t run during rendering! So event handlers don’t need to be pure.
+
+// If you’ve exhausted all other options and can’t find the right event handler for your side effect, you can still attach it to your returned JSX with a useEffect call in your component. This tells React to execute it later, after rendering, when side effects are allowed. However, this approach should be your last resort.
+
+// When possible, try to express your logic with rendering alone. You’ll be surprised how far this can take you!
+
+// Side effects geralmente pertencem a event handlers
+// Event handlers são funções em que você performa uma ação (exemplo, clicar em um botão).
+// Apesar de event handlers serem definidos dentro do componente, eles não rodam durante a renderização. Então eles não precisam ser puros.
