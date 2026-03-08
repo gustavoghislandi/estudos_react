@@ -341,3 +341,11 @@ document.getElementById('time').className = 'night';
     // useEffect
 
     // useRef
+
+//-----------------------------
+
+// It is useful to remember which operations on arrays mutate them, and which don’t. For example, push, pop, reverse, and sort will mutate the original array, but slice, filter, and map will create a new one.
+
+// Ou seja, se for tentar modificar uma prop que é array não use push. Faça uma slice (cópia) e use push.
+
+// Para entender melhor, veja o exemplo 3 no site.
