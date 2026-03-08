@@ -189,3 +189,155 @@
         // Strive to express your component’s logic in the JSX you return. When you need to “change things”, you’ll usually want to do it in an event handler. As a last resort, you can useEffect.
 
         // Writing pure functions takes a bit of practice, but it unlocks the power of React’s paradigm.
+
+
+// Num dos exemplos para prática havia tentativa de modificação do DOM. 
+
+export default function Clock({ time }) {
+  const hours = time.getHours();
+  if (hours >= 0 && hours <= 6) {
+    document.getElementById('time').className = 'night';
+  } else {
+    document.getElementById('time').className = 'day';
+  }
+  return (
+    <h1 id="time">
+      {time.toLocaleTimeString()}
+    </h1>
+  );
+}
+
+// Nota:
+    // SE FOSSE JAVASCRIPT PURO (SEM REACT) FUNCIONARIA
+
+// Mas a solução era retornar um JSX
+
+export default function Clock({ time }) {
+  const hours = time.getHours();
+  let className;
+  if (hours >= 0 && hours <= 6) {
+    className = 'night';
+  } else {
+    className = 'day';
+  }
+  return (
+    <h1 className={className}>
+      {time.toLocaleTimeString()}
+    </h1>
+  );
+}
+
+
+// No primeiro código você faz isso:
+
+document.getElementById('time').className = 'night';
+
+    // Isso é manipulação direta do DOM.
+
+    // Ou seja, você está usando a API do navegador para alterar um elemento que já existe na página.
+
+// O problema é que no React:
+
+    // Quem controla o DOM é o React
+
+    // O componente deve apenas descrever como o DOM deveria ser
+
+// Quando você usa document.getElementById, você está mexendo por fora do controle do React.
+
+// Isso cria vários problemas:
+
+// ⚠️ Possíveis problemas:
+
+    // O elemento pode nem existir ainda quando o código roda
+
+    // O React pode sobrescrever essa alteração depois
+
+    // O componente deixa de ser previsível
+
+    // Quebra o conceito de pure render
+
+//----
+
+// O React quer que você retorne a descrição da UI.
+
+// Em vez de alterar o DOM manualmente, você define a classe no JSX:
+
+    let className;
+
+    if (hours >= 0 && hours <= 6) {
+    className = 'night';
+    } else {
+    className = 'day';
+    }
+
+// Depois:
+
+    // <h1 className={className}>
+
+// Agora o fluxo é:
+
+    // props (time)
+    //      ↓
+    // cálculo (hours)
+    //      ↓
+    // JSX
+    //      ↓
+    // React atualiza o DOM
+
+// Quem faz a modificação real no DOM é o React.
+
+//--------------
+
+// Em React, durante renderização:
+
+// ❌ Não faça:
+
+    // document.getElementById
+
+    // document.querySelector
+
+    // element.className = ...
+
+    // element.style = ...
+
+// ✔️ Faça:
+
+    // calcular valores
+
+    // retornar JSX
+
+//-------------
+
+// Um jeito simples de visualizar
+
+// Imagine que React funciona como uma função matemática.
+
+// Entrada:
+
+    // time = 02:00
+
+// Saída:
+
+    // <h1 class="night">02:00:00</h1>
+
+// Entrada:
+
+    // time = 14:00
+
+// Saída:
+
+    // <h1 class="day">14:00:00</h1>
+
+// O COMPONENTE SÓ TRANSFORMA DADOS EM INTERFACE
+
+//----
+
+// Quando manipular DOM é permitido
+
+// Existe momento para isso, mas não durante render.
+
+// Usa-se:
+
+    // useEffect
+
+    // useRef
