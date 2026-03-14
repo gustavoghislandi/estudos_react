@@ -27,3 +27,16 @@
     // Perceba que title não tem nada, mas ele está ali. Então, ele fica true e isso faz o retorno ser um h1 ao invés de um h3. Se remover ele, o texto fica o h3, porque é false. sim, muda a classe também.
 
 // The root node in a React render tree is the root component of the app. In this case, the root component is App and it is the first component React renders. Each arrow in the tree points from a parent component to a child component.
+
+// Deep Dive
+// Where are the HTML tags in the render tree?
+
+// You’ll notice in the above render tree, there is no mention of the HTML tags that each component renders. This is because the render tree is only composed of React components.
+
+// React, as a UI framework, is PLATAFORM AGNOSTIC. On react.dev, we showcase examples that render to the web, which uses HTML markup as its UI primitives. But a React app could just as likely render to a mobile or desktop platform, which may use different UI primitives like UIView or FrameworkElement.
+
+// These platform UI primitives are not a part of React. React render trees can provide insight to our React app regardless of what platform your app renders to.
+
+  // React é agnóstico de plataforma porque ele só descreve árvores de componentes e estado. Quem realmente desenha a interface é o renderer da plataforma.
+
+  // No Web usamos HTML (div, button, etc.), mas em outras plataformas existem outros primitivos de UI, como UIView no iOS ou FrameworkElement no Windows.
