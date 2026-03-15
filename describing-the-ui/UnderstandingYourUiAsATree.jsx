@@ -40,3 +40,48 @@
   // React é agnóstico de plataforma porque ele só descreve árvores de componentes e estado. Quem realmente desenha a interface é o renderer da plataforma.
 
   // No Web usamos HTML (div, button, etc.), mas em outras plataformas existem outros primitivos de UI, como UIView no iOS ou FrameworkElement no Windows.
+
+  // Exemplo de render condicional:
+
+  import * as React from 'react';
+  import inspirations from './inspirations';
+  import FancyText from './FancyText';
+  import Color from './Color';
+
+  export default function InspirationGenerator({children}) {
+    const [index, setIndex] = React.useState(0);
+    const inspiration = inspirations[index];
+    const next = () => setIndex((index + 1) % inspirations.length);
+
+    return (
+      <>
+        <p>Your inspirational {inspiration.type} is:</p>
+        {inspiration.type === 'quote'
+        ? <FancyText text={inspiration.value} />
+        : <Color value={inspiration.value} />}
+
+        <button onClick={next}>Inspire me again</button>
+        {children}
+      </>
+    );
+  }
+
+  import FancyText from './FancyText';
+  import InspirationGenerator from './InspirationGenerator';
+  import Copyright from './Copyright';
+
+  export default function App() {
+    return (
+      <>
+        <FancyText title text="Get Inspired App" />
+        <InspirationGenerator>
+          <Copyright year={2004} />
+        </InspirationGenerator>
+      </>
+    );
+  }
+
+
+  // Top-level components are the components nearest to the root component and affect the rendering performance of all the components beneath them and often contain the most complexity. Leaf components are near the bottom of the tree and have no child components and are often frequently re-rendered.
+
+  // Identifying these categories of components are useful for understanding data flow and performance of your app.
