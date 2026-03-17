@@ -106,3 +106,13 @@
 // Dependency trees are useful to determine what modules are necessary to run your React app. When building a React app for production, there is typically a build step that will bundle all the necessary JavaScript to ship to the client. The tool responsible for this is called a bundler, and bundlers will use the dependency tree to determine what modules should be included.
 
 // As your app grows, often the bundle size does too. Large bundle sizes are expensive for a client to download and run. Large bundle sizes can delay the time for your UI to get drawn. Getting a sense of your app’s dependency tree may help with debugging these issues.
+
+// Resumo:
+
+// Árvores são uma forma comum de representar a relação entre entidades. Elas são frequentemente usadas para modelar UI.
+// Árvores de renderização representam a relação aninhada entre os componentes do React em uma única renderização.
+// Com a renderização condicional, a árvore de renderização pode mudar em diferentes renderizações. Com diferentes valores de prop, os componentes podem renderizar diferentes componentes filhos.
+// As árvores de renderização ajudam a identificar quais são os componentes de nível superior e folha. Os componentes de nível superior afetam o desempenho da renderização de todos os componentes abaixo deles e os componentes folha são frequentemente renderizados novamente. Identificá-los é útil para entender e depurar a performance de renderização.
+// Árvores de dependência representam as dependências de módulos em um aplicativo React.
+// As árvores de dependência são usadas por ferramentas de construção para empacotar o código necessário para enviar um aplicativo.
+// As árvores de dependência são úteis para depurar tamanhos de pacote grandes que diminuem o tempo de pintura e expõem oportunidades para otimizar o código que é empacotado.
