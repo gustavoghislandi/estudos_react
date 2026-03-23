@@ -190,5 +190,13 @@ export const sculptureList = [{
   alt: 'A group of bronze hippo sculptures emerging from the sett sidewalk as if they were swimming.'
 }];
 
-// Render and commit
+// Render and commit (analogia sobre renderização. Tem o tópico em capítulo posterior.)
+
+// Before your components are displayed on the screen, they must be rendered by React. Understanding the steps in this process will help you think about how your code executes and explain its behavior.
+
+// Imagine that your components are cooks in the kitchen, assembling tasty dishes from ingredients. In this scenario, React is the waiter who puts in requests from customers and brings them their orders. This process of requesting and serving UI has three steps:
+
+//Triggering a render (delivering the diner’s order to the kitchen)
+//Rendering the component (preparing the order in the kitchen)
+//Committing to the DOM (placing the order on the table)
 
