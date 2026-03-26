@@ -200,3 +200,10 @@ export const sculptureList = [{
 //Rendering the component (preparing the order in the kitchen)
 //Committing to the DOM (placing the order on the table)
 
+// State as a snapshot
+
+// Unlike regular JavaScript variables, React state behaves more like a snapshot. Setting it does not change the state variable you already have, but instead triggers a re-render. This can be surprising at first!
+
+  console.log(count);  // 0
+  setCount(count + 1); // Request a re-render with 1
+  console.log(count);  // Still 0!
