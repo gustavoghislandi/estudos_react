@@ -207,3 +207,5 @@ export const sculptureList = [{
   console.log(count);  // 0
   setCount(count + 1); // Request a re-render with 1
   console.log(count);  // Still 0!
+
+// Queueing a series of state updates 
