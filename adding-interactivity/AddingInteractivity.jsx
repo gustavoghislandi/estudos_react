@@ -209,3 +209,95 @@ export const sculptureList = [{
   console.log(count);  // Still 0!
 
 // Queueing a series of state updates 
+
+// This component is buggy: clicking “+3” increments the score only once.
+
+import { useState } from 'react';
+
+export default function Counter() {
+  const [score, setScore] = useState(0);
+
+  function increment() {
+    setScore(score + 1);
+  }
+
+  return (
+    <>
+      <button onClick={() => increment()}>+1</button>
+      <button onClick={() => {
+        increment();
+        increment();
+        increment();
+      }}>+3</button>
+      <h1>Score: {score}</h1>
+    </>
+  )
+}
+
+// State as a Snapshot explains why this is happening. Setting state requests a new re-render, but does not change it in the already running code. So score continues to be 0 right after you call setScore(score + 1).
+
+console.log(score);  // 0
+setScore(score + 1); // setScore(0 + 1);
+console.log(score);  // 0
+setScore(score + 1); // setScore(0 + 1);
+console.log(score);  // 0
+setScore(score + 1); // setScore(0 + 1);
+console.log(score);  // 0
+
+// You can fix this by passing an updater function when setting state. Notice how replacing setScore(score + 1) with setScore(s => s + 1) fixes the “+3” button. This lets you queue multiple state updates.
+
+import { useState } from 'react';
+
+export default function Counter() {
+  const [score, setScore] = useState(0);
+
+  function increment() {
+    setScore(s => s + 1);
+  }
+
+  return (
+    <>
+      <button onClick={() => increment()}>+1</button>
+      <button onClick={() => {
+        increment();
+        increment();
+        increment();
+      }}>+3</button>
+      <h1>Score: {score}</h1>
+    </>
+  )
+}
+
+// Por quê com função é assim e sem é assim?
+
+// Porque o React precisa garantir consistência quando há várias atualizações dependentes do estado anterior.
+
+// Se não existisse a forma com função, isso quebraria:
+
+// setScore(score + 1);
+// setScore(score + 1);
+
+// 👉 Qual deveria ser o resultado? 1 ou 2?
+// O React não tem como saber sua intenção, porque você já passou valores prontos (1 e 1).
+
+// Então a REGRA DE DESIGN DO REACT é:
+
+
+          // Valor (setScore(1)) → “substitua por isso, não me importo com o anterior”
+          // Função (setScore(s => s + 1)) → “isso depende do anterior, aplique corretamente em sequência”
+
+          
+// 💡 O “porquê” profundo:
+// React permite batching (agrupar updates) para performance.
+// Como ele não executa imediatamente, ele precisa de um jeito seguro de:
+
+// diferenciar “valor final” vs “cálculo baseado no anterior”
+// evitar resultados errados quando há várias chamadas
+
+// 👉 Resumo direto:
+// Não é acaso — é uma decisão de API pra resolver ambiguidade:
+
+// valor = substituição direta
+// função = atualização baseada no estado mais recente (segura pra múltiplos updates)
+
+// Sem isso, +3 seria impossível de garantir corretamente.
